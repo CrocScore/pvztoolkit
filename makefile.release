@@ -2,8 +2,8 @@
 OUTDIR = .\out
 TARGET = pvztoolkit
 
-BOOST_INCPATH = -I"C:\dev\vcpkg\installed\x64-windows\include"
-BOOST_LIBPATH = -LIBPATH:C:\dev\vcpkg\installed\x64-windows\lib
+BOOST_INCPATH = -I"C:\dev\vcpkg\installed\x86-windows\include"
+BOOST_LIBPATH = -LIBPATH:C:\dev\vcpkg\installed\x86-windows\lib
 BOOST_LIBS = boost_system-vc140-mt.lib
 
 CXX = cl
