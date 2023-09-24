@@ -945,8 +945,8 @@ void PvZ::PutPlant(int row, int col, int type, bool imitater)
         return;
 
     int row_count = GetRowCount();        // 行数
-    int col_count = (type == 47 ? 8 : 9); // 玉米加农炮不种在九列
-    int width = (type == 47 ? 2 : 1);     // 玉米加农炮宽度两列
+    int col_count = (type == 47 ? 8 : 9); // 玉米加农炮不种在九列 Cob Cannon cannot be placed on column 9
+    int width = (type == 47 ? 2 : 1);     // 玉米加农炮宽度两列 
     int mode = GameMode();
     bool iz_style = (mode >= 61 && mode <= 70);
     asm_init();
@@ -1002,6 +1002,8 @@ void PvZ::asm_put_zombie(int row, int col, int type)
     }
 }
 
+// BOOKMARKED
+
 void PvZ::PutZombie(int row, int col, int type)
 {
     if (!GameOn())
@@ -1010,7 +1012,7 @@ void PvZ::PutZombie(int row, int col, int type)
     if (ui != 2 && ui != 3)
         return;
 
-    if (type == 25) // 僵王
+    if (type == 25) // 僵王 // Zomboss
     {
         asm_init();
         if (isBETA())

@@ -18,6 +18,7 @@
 #include <random>
 #include <ctime>
 
+#include "HttpServer.h"
 #include "toolkit.h"
 #include "../res/version.h"
 
@@ -87,6 +88,14 @@ int main(int argc, char **argv)
         else
             return 0xF7;
     }
+
+    try {
+        HttpServer server{"0.0.0.0", 3000}; // Listen on all available network interfaces.
+        server.run();
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << "\n";
+    }
+    return 0;
 
     // 界面背景颜色
     Fl::background(243, 243, 243);

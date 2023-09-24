@@ -35,6 +35,10 @@ namespace Pt
 // 包括 类型, 数目, 地址, 修改值, 原始值
 // 一个功能的实现可能需要多个 hack
 // 地址为 0 / -1 时忽略
+// a single hack
+// Includes type, number, address, modified value, original value
+// The implementation of a function may require multiple hacks
+// Ignore when address is 0 / -1
 template <typename T, size_t size>
 struct HACK
 {

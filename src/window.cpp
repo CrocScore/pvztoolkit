@@ -720,6 +720,7 @@ Window::Window(int width, int height, const char *title)
                 choice_zombie = new Fl_Choice_(c(2) - 10, r(2), iw + 10 + 40, ih, "");
                 button_put_plant = new Fl_Button(c(3) + 40, r(1), iw - 40 + 20, ih, "种植物");
                 check_imitater = new Fl_Check_Button(c(4) + 20, r(1), iw - 20, ih, "模仿者");
+                // BOOKMARKED
                 button_put_zombie = new Fl_Button(c(3) + 40, r(2), iw - 40 + 20, ih, "出僵尸");
                 button_put_ladder = new Fl_Button(c(3) + 40, r(3), iw - 40 + 20, ih, "搭梯子");
                 button_put_grave = new Fl_Button(c(4) + 20, r(2), iw - 20, ih, "冒墓碑");
@@ -1248,7 +1249,7 @@ void Window::ReadSettings()
         DWORD dwType;
         DWORD dwSize;
 
-        wchar_t lang[15];    // 语言
+        wchar_t lang[15] = L"English";    // 语言
         DWORD scale;         // 缩放
         int scheme;          // 样式
         wchar_t zombies[20]; // 出怪
@@ -1260,16 +1261,16 @@ void Window::ReadSettings()
 
         dwType = REG_SZ;
         dwSize = sizeof(lang);
-        status = RegQueryValueExW(hKey, L"Language", 0, &dwType, (LPBYTE)&lang, &dwSize);
-        if (status == ERROR_SUCCESS)
-        {
-            if (std::wstring(lang) == L"English")
-            {
+        // status = RegQueryValueExW(hKey, L"Language", 0, &dwType, (LPBYTE)&lang, &dwSize);
+        // if (status == ERROR_SUCCESS)
+        // {
+        //     if (std::wstring(lang) == L"English")
+        //     {
                 check_tooltips->value(1);
                 check_tooltips->do_callback();
-            }
-        }
-
+        //     }
+        // }
+        // lang = L"English";
         dwType = REG_DWORD;
         dwSize = sizeof(scale);
         status = RegQueryValueExW(hKey, L"ScaleFactor", 0, &dwType, (LPBYTE)&scale, &dwSize);
@@ -1491,6 +1492,7 @@ void Window::WriteSettings()
     if (ret == ERROR_SUCCESS)
     {
         if (check_tooltips->value() == 1)
+        // BUILDING LANGUAGE BOOKMARK
             RegSetValueExW(hKey, L"Language", 0, REG_SZ, (LPBYTE)&langEnglish, sizeof(langEnglish));
         else
             RegSetValueExW(hKey, L"Language", 0, REG_SZ, (LPBYTE)&langChinese, sizeof(langChinese));
@@ -2392,6 +2394,7 @@ void Window::cb_tooltips()
     choice_zombie->copy_tooltip(on ? vstr_zombies[choice_zombie->value()].c_str() : nullptr);
     button_put_plant->copy_tooltip(on ? "Place Plant" : nullptr);
     check_imitater->copy_tooltip(on ? "Imitater" : nullptr);
+    // BOOKMARKED (not chinese)
     button_put_zombie->copy_tooltip(on ? "Place Zombie" : nullptr);
     button_put_ladder->copy_tooltip(on ? "Place Ladder" : nullptr);
     button_put_grave->copy_tooltip(on ? "Place Grave" : nullptr);

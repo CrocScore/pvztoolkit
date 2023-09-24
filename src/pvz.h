@@ -132,6 +132,7 @@ class PvZ : public Process, public Code, public Data
     void PutPlant(int, int, int, bool);
 
     // 生成僵尸
+    // BOOKMARK
     void asm_put_zombie(int, int, int);
     void PutZombie(int, int, int);
 

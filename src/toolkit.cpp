@@ -10,10 +10,12 @@ Toolkit::Toolkit(int width, int height, const char *title)
     this->path = std::filesystem::current_path();
 
     // 子窗口
+    // child window
 
     window_spawn = new SpawnWindow(0, 0, "");
 
     // 窗口回调函数
+    // window callback function
 
     button_show_details->callback(cb_show_details, this);
 
@@ -24,14 +26,16 @@ Toolkit::Toolkit(int width, int height, const char *title)
     window_spawn->callback(cb_on_hide_spawn_details, this);
 
     // 工作类
+    // Work category
 
     pvz = new PvZ();
     pvz->callback(cb_find_result, this);
-    // pvz->FindPvZ(); // 在 main() 里调用
+    // pvz->FindPvZ(); // 在 main() 里调用 // Called in main()
 
     pak = new PAK();
 
     // 工作回调函数
+    // Work callback function
 
     check_unlock_sun_limit->callback(cb_unlock_sun_limit, this);
     button_sun->callback(cb_set_sun, this);
@@ -58,6 +62,7 @@ Toolkit::Toolkit(int width, int height, const char *title)
     button_direct_win->callback(cb_direct_win, this);
 
     button_put_plant->callback(cb_put_plant, this);
+    // BOOKMARKED
     button_put_zombie->callback(cb_put_zombie, this);
     button_put_ladder->callback(cb_put_ladder, this);
     button_put_grave->callback(cb_put_grave, this);
@@ -585,10 +590,14 @@ void Toolkit::cb_put_plant()
     pvz->PutPlant(row, col, type, imitater);
 }
 
+// Finding out what this calls?
+
 void Toolkit::cb_put_zombie(Fl_Widget *, void *w)
 {
     ((Toolkit *)w)->cb_put_zombie();
 }
+
+// BOOKMARKED
 
 void Toolkit::cb_put_zombie()
 {

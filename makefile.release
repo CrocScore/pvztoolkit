@@ -2,6 +2,10 @@
 OUTDIR = .\out
 TARGET = pvztoolkit
 
+BOOST_INCPATH = -I"C:\dev\vcpkg\installed\x64-windows\include"
+BOOST_LIBPATH = -LIBPATH:C:\dev\vcpkg\installed\x64-windows\lib
+BOOST_LIBS = boost_system-vc140-mt.lib
+
 CXX = cl
 CXXFLAGS_BARE = -c -nologo \
                 -Zc:wchar_t \
@@ -13,7 +17,7 @@ CXXFLAGS_BARE = -c -nologo \
 DEFINES = -DUNICODE -D_UNICODE \
           -DWIN32 -D_WIN32_WINNT=0x0600 \
           -D_REGEX_MAX_STACK_COUNT=0
-INCPATH = -I.
+INCPATH = -I. $(BOOST_INCPATH)
 INCS = .\src\pak.h \
        .\src\process.h \
        .\src\code.h \
@@ -21,18 +25,21 @@ INCS = .\src\pak.h \
        .\src\lineup.h \
        .\src\pvz.h \
        .\src\window.h \
-       .\src\toolkit.h
+       .\src\toolkit.h \
+       .\src\HttpServer.h 
 CXXFLAGS = /Fo"$(OUTDIR)\\" /Fd"$(OUTDIR)\$(TARGET).pdb" $(CXXFLAGS_BARE) $(DEFINES) $(INCPATH)
 
 RC = rc
 RC_FLAGS = /n $(DEFINES)
 
 LINKER = link
+
+LIBS_BOOST = $(BOOST_LIBPATH) $(BOOST_LIBS)
 LIBS_FLTK = fltk.lib fltk_z.lib fltk_images.lib fltk_jpeg.lib fltk_png.lib
 LIBS_ZLIB = zlib.lib
 LIBS_WIN32 = user32.lib shell32.lib advapi32.lib comctl32.lib comdlg32.lib ole32.lib \
              psapi.lib version.lib wsock32.lib crypt32.lib gdi32.lib gdiplus.lib wintrust.lib
-LIBS = /LIBPATH:$(OUTDIR) $(LIBS_FLTK) $(LIBS_ZLIB) $(LIBS_WIN32)
+LIBS = $(LIBS_BOOST) /LIBPATH:$(OUTDIR) $(LIBS_FLTK) $(LIBS_ZLIB) $(LIBS_WIN32) 
 OBJS = $(OUTDIR)\pak.obj \
        $(OUTDIR)\process.obj \
        $(OUTDIR)\code.obj \
@@ -41,9 +48,11 @@ OBJS = $(OUTDIR)\pak.obj \
        $(OUTDIR)\pvz.obj \
        $(OUTDIR)\window.obj \
        $(OUTDIR)\toolkit.obj \
+       $(OUTDIR)\HttpServer.obj \
        $(OUTDIR)\main.obj
 RES = $(OUTDIR)\version.res
 LFLAGS = /NOLOGO /DYNAMICBASE /NXCOMPAT /INCREMENTAL:NO /SUBSYSTEM:WINDOWS \
+        /NODEFAULTLIB:LIBCMT \
          $(LIBS) $(OBJS) $(RES) /STACK:0x00400000
 
 
@@ -75,6 +84,9 @@ $(OUTDIR)\lineup.obj: .\src\lineup.cpp $(INCS)
 
 $(OUTDIR)\pvz.obj: .\src\pvz.cpp $(INCS)
     $(CXX) $(CXXFLAGS) /Fe"$(OUTDIR)\pvz.obj" .\src\pvz.cpp
+
+$(OUTDIR)\HttpServer.obj: .\src\HttpServer.cpp $(INCS)
+    $(CXX) $(CXXFLAGS) /Fe"$(OUTDIR)\HttpServer.obj" .\src\HttpServer.cpp
 
 $(OUTDIR)\window.obj: .\src\window.cpp $(INCS)
     $(CXX) $(CXXFLAGS) /Fe"$(OUTDIR)\window.obj" .\src\window.cpp
